@@ -92,8 +92,6 @@ public class BIP39 {
         final int mask = checksumMask(entropyBits);
 
         // Compute SHA256 checksum
-        final int checksumLength = entropyBits / 32;
-
         final byte checksum;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -121,6 +119,7 @@ public class BIP39 {
         final WordList wordList = WordList.get(language);
 
         // Compute the number of words required to represent the entropy.
+        final int checksumLength = entropyBits / 32;
         final int nbWords = (entropyBits + checksumLength) / WORD_BITS;
 
         StringBuilder sb = new StringBuilder();
