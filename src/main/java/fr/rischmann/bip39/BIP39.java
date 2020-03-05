@@ -148,7 +148,7 @@ public class BIP39 {
     private static int checksumMask(int length) {
         switch (length) {
             case 128:
-                return 0xFE; // 4 bits
+                return 0xF0; // 4 bits
             case 160:
                 return 0xF8; // 5 bits
             case 192:
