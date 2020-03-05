@@ -257,10 +257,9 @@ public class BIP39 {
             // fetch the byte needed for the current position
             int b = entropy[pos / 8];
 
-
             int mask = bitMask(pos);
 
-            // Shift the current value by one to the lift since we're adding a single bit.
+            // Shift the current value by one to the left since we're adding a single bit.
             value <<= 1;
             // Append a 1 if the bit for the current position is set, 0 otherwise.
             value |= isBitSet(b, mask);
