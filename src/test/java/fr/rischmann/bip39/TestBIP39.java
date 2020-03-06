@@ -29,6 +29,14 @@ public class TestBIP39 {
     }
 
     @Test
+    public void extractIndex() throws DecoderException {
+        byte[] entropy = Hex.decodeHex("18ab19a9f54a9274f03e5209a2ac8a91");
+
+        int i = BIP39.extractIndex(entropy, 10);
+        assertEquals(277, i);
+    }
+
+    @Test
     public void mnemonicEnglish() throws DecoderException, IOException {
         List<TestVector> vectors = loadTestVectors();
 
