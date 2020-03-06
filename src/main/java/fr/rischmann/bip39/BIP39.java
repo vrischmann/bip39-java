@@ -222,7 +222,7 @@ public class BIP39 {
      * @param wordPos the word position in the sentence (0 based)
      * @return the index in a word list
      */
-    private static int extractIndex(byte[] entropy, int wordPos) {
+    static int extractIndex(byte[] entropy, int wordPos) {
         int pos;
         int end;
         int value;
