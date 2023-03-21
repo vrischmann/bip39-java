@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WordList {
     final List<String> words = new ArrayList<>();
@@ -25,17 +22,15 @@ public class WordList {
      * @return words
      */
     static WordList get(Language language) {
-        switch (language) {
-            case ENGLISH:
-                return readResource("bip39_english.txt");
-
-            default:
-                throw new IllegalArgumentException("unknown language " + language);
-        }
+        return switch (language) {
+            case ENGLISH -> readResource("bip39_english.txt");
+        };
     }
 
     private static WordList readResource(String name) {
         InputStream stream = WordList.class.getClassLoader().getResourceAsStream(name);
+        Objects.requireNonNull(stream);
+
         InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
         WordList wordList = new WordList();

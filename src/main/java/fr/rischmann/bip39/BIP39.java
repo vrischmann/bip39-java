@@ -10,14 +10,13 @@ import java.util.StringTokenizer;
 /***
  * BIP39 implements the BIP-0039 specification defined <a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki">here</a>.
  * BIP-0039 defines an implementation of a mnemonic sentence used to encode entropy into easy to remember and communicate sequence of words.
- *
  * This class only supports the english word list.
  */
 @SuppressWarnings("WeakerAccess")
 public class BIP39 {
-    public static int MIN_ENTROPY_SIZE = 16 * 8;
-    public static int MAX_ENTROPY_SIZE = 32 * 8;
-    private static int WORD_BITS = 11;
+    public static final int MIN_ENTROPY_SIZE = 16 * 8;
+    public static final int MAX_ENTROPY_SIZE = 32 * 8;
+    private static final int WORD_BITS = 11;
 
     /***
      * Decode the mnemonic sentence into a byte array.
@@ -37,7 +36,7 @@ public class BIP39 {
             words.add(tokenizer.nextToken());
         }
 
-        // If the data size is not divisible by 8, add an additional byte.
+        // If the data size is not divisible by 8, add a byte.
         int dataSize = words.size() * 11;
         if (dataSize % 8 != 0) {
             dataSize /= 8;
@@ -145,20 +144,14 @@ public class BIP39 {
      * @throws IllegalStateException if the length is invalid
      */
     private static int checksumMask(int length) {
-        switch (length) {
-            case 128:
-                return 0xF0; // 4 bits
-            case 160:
-                return 0xF8; // 5 bits
-            case 192:
-                return 0xFC; // 6 bits
-            case 224:
-                return 0xFE; // 7 bits
-            case 256:
-                return 0xFF; // 8 bits
-            default:
-                throw new IllegalStateException("invalid checksum length");
-        }
+        return switch (length) {
+            case 128 -> 0xF0; // 4 bits
+            case 160 -> 0xF8; // 5 bits
+            case 192 -> 0xFC; // 6 bits
+            case 224 -> 0xFE; // 7 bits
+            case 256 -> 0xFF; // 8 bits
+            default -> throw new IllegalStateException("invalid checksum length");
+        };
     }
 
     /***
@@ -270,14 +263,11 @@ public class BIP39 {
 
     /***
      * Computes a mask to get the bit for the position <b>pos</b>.
-     *
      * This function works by computing a bit shift for the current position mod 8 to stay in the byte range.
-     *
      * For example, if pos == 4 then pos % 8 == 4.
      * The shift is 7-4 == 3 and the mask is this:
      *  - 1<<3 == 8
      *         == 0b00001000
-     *
      * Now if we take pos == 10 then pos % 8 == 2.
      * The shift is 7 - 2 == 5 which the mask is this:
      *  - 1<<5 == 32
