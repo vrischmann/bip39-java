@@ -75,7 +75,7 @@ public class TestBIP39 {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(data, new TypeReference<List<TestVector>>() {
+        return objectMapper.readValue(data, new TypeReference<>() {
         });
     }
 

@@ -25,8 +25,8 @@ public class TestBIP39Random {
         });
     }
 
-    private WordList.Language language;
-    private byte[] data;
+    private final WordList.Language language;
+    private final byte[] data;
 
     public TestBIP39Random(WordList.Language language, int size) {
         this.language = language;
